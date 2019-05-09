@@ -24,18 +24,23 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
 
+@Component
 public class Landing {
 
     private static Logger logger = LogManager.getLogger(Landing.class);
 
-    final int port = 9999;
-    final String server = "zsearch.cloud.alipay.com";
-    final String username = "your_username";
-    final String password = "your_password";
+    @Value("${server}")
+    String server;
+    @Value("${username}")
+    String username;
+    @Value("${password}")
+    String password;
     final String index = "greeting";
 
     RestHighLevelClient client;
@@ -50,8 +55,7 @@ public class Landing {
     RestHighLevelClient factoryClient() {
         final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
-        RestClientBuilder builder = RestClient.builder(
-                new HttpHost(server, port))
+        RestClientBuilder builder = RestClient.builder(HttpHost.create(server))
                 .setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider));
         RestHighLevelClient client = new RestHighLevelClient(builder);
         return client;

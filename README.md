@@ -14,17 +14,15 @@ ZSearch Java客户端的简单示例，包括创建索引、批量写数据、�
 
 1 修改配置
 
-`vi src/main/java/com/alipay/zsearch/landing/Landing.java`
+`vi src/main/resources/application.properties`
 
-> 从ZSearch控制台获取服务器地址、用户名及密码。
+> 服务器地址、用户名及密码从ZSearch控制台获取.
 
-```java
-    final int port = 9999;
-    final String server = "zsearch.cloud.alipay.com";
-    final String username = "your_username";
-    final String password = "your_password";
 ```
-
+server = http://zsearch.cloud.alipay.com:9999
+username = youre_username
+password = youre_password
+```
 
 2 运行示例
 `mvn clean package`
